@@ -2,26 +2,26 @@
 <search>
   <entry>
     <title><![CDATA[我的博客]]></title>
-    <url>%2F2019%2F09%2F22%2F%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%2F</url>
-    <content type="text"><![CDATA[我的第一篇博客 作者：Guan 日期：2019-09-22 1. 前言2. 简介3.内容]]></content>
-      <categories>
-        <category>springboot</category>
-      </categories>
-      <tags>
-        <tag>日志</tag>
-        <tag>分享</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[我的博客]]></title>
     <url>%2F2019%2F09%2F22%2F%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%2F</url>
     <content type="text"><![CDATA[百度一下 beans &#123; dataSource(BasicDataSource) &#123; driverClassName = "org.hsqldb.jdbcDriver" url = "jdbc:hsqldb:mem:grailsDB" username = "sa" password = "" settings = [mynew:"setting"] &#125; sessionFactory(SessionFactory) &#123; dataSource = dataSource &#125; myService(MyService) &#123; nestedBean = &#123; AnotherBean bean -&gt; dataSource = dataSource &#125; &#125;&#125; 代码如下： // a class that uses a stateful Command-style class to perform some processingpackage fiona.apple;// Spring-API importsimport org.springframework.beans.BeansException;import org.springframework.context.ApplicationContext;import org.springframework.context.ApplicationContextAware;public class CommandManager implements ApplicationContextAware &#123; String msg="The preceding is not desirable, because the business code is aware of and coupled to the Spring Framework. Method Injection, a somewhat advanced feature of the Spring IoC container, allows this use case to be handled in a clean fashion."; private ApplicationContext applicationContext; public Object process(Map commandState) &#123; // grab a new instance of the appropriate Command Command command = createCommand(); // set the state on the (hopefully brand new) Command instance command.setState(commandState); return command.execute(); &#125; protected Command createCommand() &#123; // notice the Spring API dependency! return this.applicationContext.getBean("command", Command.class); &#125; public void setApplicationContext( ApplicationContext applicationContext) throws BeansException &#123; this.applicationContext = applicationContext; &#125;&#125;]]></content>
       <categories>
         <category>java</category>
       </categories>
       <tags>
-        <tag>分享</tag>
         <tag>杂谈</tag>
+        <tag>分享</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[我的博客]]></title>
+    <url>%2F2019%2F09%2F22%2F%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%2F</url>
+    <content type="text"><![CDATA[我的第一篇博客 作者：Guan 日期：2019-09-22 1. 前言2. 简介3.内容]]></content>
+      <categories>
+        <category>springboot</category>
+      </categories>
+      <tags>
+        <tag>分享</tag>
+        <tag>日志</tag>
       </tags>
   </entry>
   <entry>
