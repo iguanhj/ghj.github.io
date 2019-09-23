@@ -1,32 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[我的博客]]></title>
-    <url>%2F2019%2F09%2F22%2F%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%2F</url>
-    <content type="text"><![CDATA[百度一下 beans &#123; dataSource(BasicDataSource) &#123; driverClassName = "org.hsqldb.jdbcDriver" url = "jdbc:hsqldb:mem:grailsDB" username = "sa" password = "" settings = [mynew:"setting"] &#125; sessionFactory(SessionFactory) &#123; dataSource = dataSource &#125; myService(MyService) &#123; nestedBean = &#123; AnotherBean bean -&gt; dataSource = dataSource &#125; &#125;&#125; 代码如下： // a class that uses a stateful Command-style class to perform some processingpackage fiona.apple;// Spring-API importsimport org.springframework.beans.BeansException;import org.springframework.context.ApplicationContext;import org.springframework.context.ApplicationContextAware;public class CommandManager implements ApplicationContextAware &#123; String msg="The preceding is not desirable, because the business code is aware of and coupled to the Spring Framework. Method Injection, a somewhat advanced feature of the Spring IoC container, allows this use case to be handled in a clean fashion."; private ApplicationContext applicationContext; public Object process(Map commandState) &#123; // grab a new instance of the appropriate Command Command command = createCommand(); // set the state on the (hopefully brand new) Command instance command.setState(commandState); return command.execute(); &#125; protected Command createCommand() &#123; // notice the Spring API dependency! return this.applicationContext.getBean("command", Command.class); &#125; public void setApplicationContext( ApplicationContext applicationContext) throws BeansException &#123; this.applicationContext = applicationContext; &#125;&#125;]]></content>
+    <title><![CDATA[Docker上安装Elasticsearch]]></title>
+    <url>%2F2019%2F09%2F24%2FDocker%E4%B8%8A%E5%AE%89%E8%A3%85Elasticsearch%2F</url>
+    <content type="text"><![CDATA[1.Elasticsearch安装1.1 拉取镜像 docker pull ElasticSearch 1.2 创建并启动容器 清理内存： 释放网页缓存，目录项和索引（To free pagecache, dentries and inodes）: syncecho 3 &gt; /proc/sys/vm/drop_caches 启动容器： # docker run -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -d -p 9200:9200 -p 9300:9300 --name &lt;容器名称&gt; &lt;镜像ID&gt; ElasticSearch是用Java写的，它默认会占用2GB的堆内存空间，-e ES_JAVA_OPTS=&quot;-Xms256m -Xmx256m&quot;限制内存为256MB docker ps查看 docker logs &lt;容器ID&gt;查看日志信息，可能会报如下错误（再次docker ps会发现elasticsearch没有启动） 解决方法： 切换到root用户修改配置sysctl.conf # vi /etc/sysctl.conf 添加配置： # vm.max_map_count=655360 并执行命令： # sysctl -p docker start &lt;容器ID&gt;重新启动elasticsearch，即可启动成功。 1.3 检查 浏览器URL地址输入&lt;ip地址&gt;：9200，会出现如下JSON格式的数据。 1.4 Java 使用 9300 端口连接ES 会出现如下错误 NoNodeAvailableException[None of the configured nodes are available:[&#123;#transport#‐1&#125;&#123;exvgJLR‐RlCNMJy‐hzKtnA&#125;&#123;xxxx&#125;&#123;xxxx&#125;]]at org.elasticsearch.client.transport.TransportClientNodesService.ensureNodes AreAvailableat org.elasticsearch.client.transport.TransportClientNodesService.executeat org.elasticsearch.client.transport.TransportProxyClient.execute 解决方法： 拷贝配置文件到宿主机（docker中的elasticsearch容器必须是启动的）： # docker cp &lt;容器ID&gt;:/usr/share/elasticsearch/config/elasticsearch.yml /usr/local/elasticsearch/elasticsearch.yml 停止elasticsearch容器并删除它 # docker stop &lt;容器ID&gt; 查看停止的容器： # docker ps -a 删除容器 # docker rm -f &lt;容器ID&gt; 重新创建容器，此时需要挂载文件 # docker run -di -e ES_JAVA_OPTS="-Xms256m -Xmx256m" --name=&lt;容器名称&gt; -p 9200:9200 -p 9300:9300 -v /usr/local/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml elasticsearch:6.5.0 在/usr/local/elasticsearch/elasticsearch.yml文件中添加transport.host: 0.0.0.0，配置如下： cluster.name: "docker-cluster"network.host: 0.0.0.0transport.host: 0.0.0.0# minimum_master_nodes need to be explicitly set when bound on a public IP# set to 1 to allow single node clusters# Details: https://github.com/elastic/elasticsearch/pull/17288discovery.zen.minimum_master_nodes: 1#允许跨域http.cors.enabled: truehttp.cors.allow-origin: "*" 2. 安装IK中文分词器 从github下载ik，下载地址：(注意：IK分词器的版本和elasticsearch的版本要一致) https://github.com/medcl/elasticsearch-analysis-ik/releases 下载解压复制到宿主机 /usr/local/elasticsearch目录下 进入/usr/local/elasticsearch`目录 # cd /usr/local/elasticsearch 复制到elasticsearch容器中 # docker cp elasticsearch-analysis-ik-6.5.0 &lt;容器ID&gt;:/usr/share/elasticsearch/plugins 重启elasticsearch容器 # docker restart &lt;容器ID&gt; 检查是否安装成功： PUT http://&lt;你的ip&gt;:9200/_analyze&#123; "analyzer":"ik_smart", "text":"中国驻洛杉矶领事馆遭亚裔男子枪击 嫌犯已自首"&#125; 结果如下： &#123; "tokens": [ &#123; "token": "中国", "start_offset": 0, "end_offset": 2, "type": "CN_WORD", "position": 0 &#125;, &#123; "token": "驻", "start_offset": 2, "end_offset": 3, "type": "CN_CHAR", "position": 1 &#125;, &#123; "token": "洛杉矶", "start_offset": 3, "end_offset": 6, "type": "CN_WORD", "position": 2 &#125;, &#123; "token": "领事馆", "start_offset": 6, "end_offset": 9, "type": "CN_WORD", "position": 3 &#125;, &#123; "token": "遭", "start_offset": 9, "end_offset": 10, "type": "CN_CHAR", "position": 4 &#125;, &#123; "token": "亚裔", "start_offset": 10, "end_offset": 12, "type": "CN_WORD", "position": 5 &#125;, &#123; "token": "男子", "start_offset": 12, "end_offset": 14, "type": "CN_WORD", "position": 6 &#125;, &#123; "token": "枪击", "start_offset": 14, "end_offset": 16, "type": "CN_WORD", "position": 7 &#125;, &#123; "token": "嫌犯", "start_offset": 17, "end_offset": 19, "type": "CN_WORD", "position": 8 &#125;, &#123; "token": "已", "start_offset": 19, "end_offset": 20, "type": "CN_CHAR", "position": 9 &#125;, &#123; "token": "自首", "start_offset": 20, "end_offset": 22, "type": "CN_WORD", "position": 10 &#125; ]&#125; 3.出现的问题及解决方法 cluster block exception： &#123; "error": &#123; "root_cause": [ &#123; "type": "cluster_block_exception", "reason": "blocked by: [FORBIDDEN/12/index read-only / allow delete (api)];" &#125; ], "type": "cluster_block_exception", "reason": "blocked by: [FORBIDDEN/12/index read-only / allow delete (api)];" &#125;, "status": 403&#125; 解决方法： PUT http://&lt;你的IP&gt;:9200/_all/_settings&#123; "index.blocks.read_only_allow_delete": null&#125;]]></content>
       <categories>
-        <category>java</category>
+        <category>教程</category>
       </categories>
       <tags>
-        <tag>杂谈</tag>
-        <tag>分享</tag>
+        <tag>Docker</tag>
+        <tag>Elasticsearch</tag>
       </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[我的博客]]></title>
-    <url>%2F2019%2F09%2F22%2F%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%2F</url>
-    <content type="text"><![CDATA[我的第一篇博客 作者：Guan 日期：2019-09-22 1. 前言2. 简介3.内容]]></content>
-      <categories>
-        <category>springboot</category>
-      </categories>
-      <tags>
-        <tag>分享</tag>
-        <tag>日志</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2019%2F09%2F22%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post$ hexo new "My New Post" More info: Writing Run server$ hexo server More info: Server Generate static files$ hexo generate More info: Generating Deploy to remote sites$ hexo deploy More info: Deployment]]></content>
   </entry>
 </search>
