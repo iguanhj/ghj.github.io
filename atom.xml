@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://iguanhj.github.io/"/>
-  <updated>2019-09-24T08:04:29.476Z</updated>
+  <updated>2019-09-24T08:21:01.995Z</updated>
   <id>http://iguanhj.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://iguanhj.github.io/posts/d7ba9b14/"/>
     <id>http://iguanhj.github.io/posts/d7ba9b14/</id>
     <published>2019-09-23T16:55:02.000Z</published>
-    <updated>2019-09-24T08:04:29.476Z</updated>
+    <updated>2019-09-24T08:21:01.995Z</updated>
     
     <summary type="html">
     
@@ -69,6 +69,33 @@
     
     
       <category term="Spring Boot" scheme="http://iguanhj.github.io/tags/Spring-Boot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在Linux上安装Logstash并将mysql中数据同步到elasticsearch索引库</title>
+    <link href="http://iguanhj.github.io/posts/21a8dc83/"/>
+    <id>http://iguanhj.github.io/posts/21a8dc83/</id>
+    <published>2019-02-24T07:38:24.000Z</published>
+    <updated>2019-09-24T08:42:27.055Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="elasticsearch" scheme="http://iguanhj.github.io/tags/elasticsearch/"/>
+    
+      <category term="logstash" scheme="http://iguanhj.github.io/tags/logstash/"/>
     
   </entry>
   
