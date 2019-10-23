@@ -103,9 +103,9 @@
     
       <category term="Docker" scheme="http://iguanhj.github.io/tags/Docker/"/>
     
-      <category term="FastDFS" scheme="http://iguanhj.github.io/tags/FastDFS/"/>
-    
       <category term="Spring Boot" scheme="http://iguanhj.github.io/tags/Spring-Boot/"/>
+    
+      <category term="FastDFS" scheme="http://iguanhj.github.io/tags/FastDFS/"/>
     
       <category term="MongoDB" scheme="http://iguanhj.github.io/tags/MongoDB/"/>
     
