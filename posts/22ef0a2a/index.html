@@ -1,0 +1,264 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>RESTful API | Guan</title><meta name="description" content="RESTful API"><meta name="keywords" content="RESTful"><meta name="author" content="Guan"><meta name="copyright" content="Guan"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon2.ico"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="canonical" href="http://guanhongjie.coding.me/posts/22ef0a2a/"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="RESTful API"><meta name="twitter:description" content="RESTful API"><meta name="twitter:image" content="http://139.9.220.20:81/images/blogimg/restful.gif"><meta property="og:type" content="article"><meta property="og:title" content="RESTful API"><meta property="og:url" content="http://guanhongjie.coding.me/posts/22ef0a2a/"><meta property="og:site_name" content="Guan"><meta property="og:description" content="RESTful API"><meta property="og:image" content="http://139.9.220.20:81/images/blogimg/restful.gif"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="next" title="Mybatis查询树形结构数据" href="http://guanhongjie.coding.me/posts/e8e2ee81/"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d631fca1b9b4a6d4b1f6b0d5db747f27";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><link rel="dns-prefetch" href="https://www.google-analytics.com"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-148517345-1', 'auto');
+ga('send', 'pageview');
+</script><meta name="google-site-verification" content="vABtl4jO4DKE4n_zVQS4fH2a4Klk2axuQdL9xSK47U0"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://iguanhj.github.io/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  highlight_copy: 'true',
+  highlight_lang: 'true',
+  highlight_shrink: 'false',
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    title: '添加书签',
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天'
+
+  
+}</script></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div class="auto_open" id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是REST"><span class="toc-number">2.</span> <span class="toc-text">什么是REST</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是RESTful"><span class="toc-number">3.</span> <span class="toc-text">什么是RESTful</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么使用RESTful"><span class="toc-number">4.</span> <span class="toc-text">为什么使用RESTful</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传统的URL和RESTful-风格"><span class="toc-number">5.</span> <span class="toc-text">传统的URL和RESTful 风格</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何实现RESTful风格的API"><span class="toc-number">6.</span> <span class="toc-text">如何实现RESTful风格的API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文档"><span class="toc-number">7.</span> <span class="toc-text">参考文档</span></a></li></ol></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://picsum.photos/id/1029/4887/2759)"><div id="page-header"><span class="pull-left"> <a class="blog_title" id="site-name" href="/">Guan</a></span><div class="open toggle-menu pull-right"><div class="menu-icon-first"></div><div class="menu-icon-second"></div><div class="menu-icon-third"></div></div><div class="menu_mask"></div><span class="pull-right menus"><div class="mobile_author_icon"><img class="lozad avatar_img" src="/img/touxiang.png" onerror="onerror=null;src='/img/friend_404.gif'"></div><div class="mobile_post_data"><div class="mobile_data_item text-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">8</div></a></div></div><div class="mobile_data_item text-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">15</div></a></div></div><div class="mobile_data_item text-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">5</div></a></div></div></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tools/"><i class="fa-fw fa fa-bars"></i><span> 工具</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw  fa fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/message/ "><i class="fa-fw  fa fa-coffee"></i><span> 留言板</span></a></div><script>document.body.addEventListener('touchstart', function(){ });</script></div></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search fa-fw"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title"><div class="posttitle">RESTful API</div></div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2019-06-08<span class="post-meta__separator">|</span><i class="fa fa-history" aria-hidden="true"></i> 更新于 2019-10-26</time><span class="post-meta__separator mobile_hidden">|</span><span class="mobile_hidden"><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/RESTful/">RESTful</a></span></div></div></div><div class="layout layout_post" id="content-inner">   <article id="post"><div class="article-container" id="post-content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>RESTful架构，就是目前流行的一种互联网软件架构。它结构清晰、符合标准、易 于理解、扩展方便，所以正得到越来越多网站的采用。REST一词，是由Roy Thomes Fielding（HTTP协议(v1.0和v1.1)的主要设计者、Apache服务器作者之一、Apache基金会第一任主席）在他2000年的博士论文中提出的。</p>
+<h2 id="什么是REST"><a href="#什么是REST" class="headerlink" title="什么是REST"></a>什么是REST</h2><p>REST 是Representational State Transfer的缩写，翻译是”表现层状态转化”。</p>
+<p>简单来说，就是用<code>URI</code>表示资源，用<code>HTTP方法</code>(GET, POST, PUT, DELETE等)表示对这些资源的操作。</p>
+<ul>
+<li>Resource: 资源，即数据，存在互联网上的可被访问的实体</li>
+<li>Representation： 数据的某种表现形式，如HTML, JSON。</li>
+<li>State Transfer：状态变化，HTTP方法实现</li>
+</ul>
+<p>面向资源是REST明显的特征，对于同一个资源的一组不同的操作。资源是服务器 上一个可命名的抽象概念，资源是以名词为核心来组织的，首先关注的是名词。REST要 求，必须通过统一的接口来对资源执行各种操作。对于每个资源只能执行一组有限的操作。</p>
+<p>REST是设计风格而不是标准</p>
+<h2 id="什么是RESTful"><a href="#什么是RESTful" class="headerlink" title="什么是RESTful"></a>什么是RESTful</h2><p>百度百科给出的解释：RESTful是一种网络应用程序的设计风格和开发方式，基于<a href="https://baike.baidu.com/item/HTTP/243074" target="_blank" rel="noopener">HTTP</a>，可以使用<a href="https://baike.baidu.com/item/XML/86251" target="_blank" rel="noopener">XML</a>格式定义或<a href="https://baike.baidu.com/item/JSON/2462549" target="_blank" rel="noopener">JSON</a>格式定义。RESTFUL适用于移动互联网厂商作为业务使能接口的场景，实现第三方<a href="https://baike.baidu.com/item/OTT/9960940" target="_blank" rel="noopener">OTT</a>调用移动网络资源的功能，动作类型为新增、变更、删除所调用资源。</p>
+<p>基于REST构建的API就是Restful风格。</p>
+<p>RESTful是一种架构的规范与约束、原则，符合这种规范的架构就是RESTful架构。</p>
+<h2 id="为什么使用RESTful"><a href="#为什么使用RESTful" class="headerlink" title="为什么使用RESTful"></a>为什么使用RESTful</h2><p>在前后端不分离时代，前端开发人员将开发好了前端HTML页面，后端开发人员需要将前端的HTML页面改成JSP或者Thymeleaf等模板引擎的页面，甚至有时候还会添加或者修改一些JS代码，使得后端人员不能专注于后端的业务开发，严重影响了产品的开发效率。随着前后端分离时代的来临，使用RESTful，前后端规定一套统一的响应结构，可以使得产品开发是一个并行的模式，加大了开发的效率和开发周期。</p>
+<p>现在的客户端种类很多，例如，Android、IOS、PC端等，RESTful可以    通过统一的接口为这些客客户端提供服务，这样的接口只需要提供数据而用提供前端样式。</p>
+<h2 id="传统的URL和RESTful-风格"><a href="#传统的URL和RESTful-风格" class="headerlink" title="传统的URL和RESTful 风格"></a>传统的URL和RESTful 风格</h2><p>对用户进行增删改查传统的URL和RESTful风格之间的比较</p>
+<p>传统的URL风格：</p>
+<table>
+<thead>
+<tr>
+<th align="center">方法</th>
+<th align="center">传统的URL</th>
+<th align="center">Http请求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">查询</td>
+<td align="center">/user/find?id=1</td>
+<td align="center">GET</td>
+</tr>
+<tr>
+<td align="center">新增</td>
+<td align="center">/user/add?name=”zhangsan”</td>
+<td align="center">POST</td>
+</tr>
+<tr>
+<td align="center">修改</td>
+<td align="center">/user/edit?id=2&amp;name=”lisi”</td>
+<td align="center">POST</td>
+</tr>
+<tr>
+<td align="center">删除</td>
+<td align="center">/user/delete?id=1</td>
+<td align="center">GET</td>
+</tr>
+</tbody></table>
+<p>RESTful风格：</p>
+<table>
+<thead>
+<tr>
+<th align="center">方法</th>
+<th align="center">RESTful风格的URL</th>
+<th align="center">Http请求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">查询</td>
+<td align="center">/user/1</td>
+<td align="center">GET</td>
+</tr>
+<tr>
+<td align="center">新增</td>
+<td align="center">/user</td>
+<td align="center">POST</td>
+</tr>
+<tr>
+<td align="center">修改</td>
+<td align="center">/user/1</td>
+<td align="center">PUT</td>
+</tr>
+<tr>
+<td align="center">删除</td>
+<td align="center">/user/1</td>
+<td align="center">DELETE</td>
+</tr>
+</tbody></table>
+<ul>
+<li><code>url</code>：传统的URL风格更多的是描述了请求的动作行为，而<code>RESTful风格的url描述的是资源</code>。 例如，REStful风格的查询、修改和删除url都是一样的，都是对用户id为1的用户执行不同操作，而 用户就是系统中的资源。</li>
+<li><code>http请求方式</code>：在传统的URL风格POST请求一般用来新增和修改，因为修改和删除参数一般很长，而GET方式的请求不能传输超过4000字节的数据，<code>RESTful风格使用http请求描述不同的行为，使用状态码描述不同的结果</code>。</li>
+<li><code>数据交互方式</code>：传统的URL使用的是Http参数进行数据传输，而<code>RESTful风格的URL使用的是Json进行数据交互</code>。</li>
+</ul>
+<h2 id="如何实现RESTful风格的API"><a href="#如何实现RESTful风格的API" class="headerlink" title="如何实现RESTful风格的API"></a>如何实现RESTful风格的API</h2><ol>
+<li><p>协议</p>
+<p>API与用户的通信协议，总是使用<a href="http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html" target="_blank" rel="noopener">HTTPs协议</a>。</p>
+</li>
+<li><p>域名</p>
+<p>将api部署在专用域名下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http://api.example.com</span><br></pre></td></tr></table></figure>
+
+<p>或者将api放在主域名下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http://www.example.com/api/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>版本</p>
+<p>将API的版本号放在url中。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http://www.example.com/api/v1</span><br></pre></td></tr></table></figure>
+
+<p>另一种做法是，将版本号放在HTTP头信息中，但不如放入URL方便和直观。<a href="https://developer.github.com/v3/media/#request-specific-version" target="_blank" rel="noopener">Github</a>采用这种做法。</p>
+</li>
+<li><p>路径</p>
+<p>路径表示API的具体网址。每个网址代表一种资源。 资源作为网址，网址中不能有动词只能有名词，一般名词要与数据库  的表名对应。一般来说，数据库中的表都是同种记录的”集合”（collection），所以名词要使用复数。</p>
+<p>正确示例： </p>
+<p><code>http://www.example.com/api/v1/employees</code></p>
+<p>错误示例：</p>
+<p><code>http://www.example.com/api/v1/employee</code></p>
+<p><code>http://www.example.com/api/v1/add/employee</code></p>
+</li>
+<li><p>HTTP动词</p>
+<p>对于资源的具体操作类型，由HTTP动词表示。</p>
+<p>常用的HTTP动词有下面五个（括号里是对应的SQL命令）。</p>
+<blockquote>
+<ul>
+<li>GET（SELECT）：从服务器取出资源（一项或多项）。</li>
+<li>POST（CREATE）：在服务器新建一个资源。</li>
+<li>PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）。</li>
+<li>PATCH（UPDATE）：在服务器更新资源（客户端提供改变的属性）。</li>
+<li>DELETE（DELETE）：从服务器删除资源。</li>
+</ul>
+</blockquote>
+<p>两个个不常用的HTTP动词。</p>
+<blockquote>
+<ul>
+<li>HEAD：获取资源的元数据。</li>
+<li>OPTIONS：获取信息，关于资源的哪些属性是客户端可以改变的。</li>
+</ul>
+</blockquote>
+<p>示例：</p>
+<blockquote>
+<ul>
+<li>GET   /employees  : 查询所有员工</li>
+<li>GET  /employees/ID ：查询某个员工</li>
+<li>GET   /employees/ID/roles  ：查询某个员工所属的角色</li>
+<li>POST  /employees : 新建一个员工</li>
+<li>PUT    / employees/ID ： 更新某个员工的信息（需要提供该员工的所有信息）</li>
+<li>PATCH  /employees/ID ： 更新某个员工的信息（需要提供该员工的部分信息）    </li>
+<li>DELETE  /employees/ID：删除某个员工</li>
+</ul>
+</blockquote>
+</li>
+<li><p>过滤信息</p>
+<p>如果记录数量很多，服务器不可能都将它们返回给用户。API应该提供参数，过滤返回结果。</p>
+<p>常用的参数：</p>
+<blockquote>
+<ul>
+<li>?limit=10：指定返回记录的数量</li>
+<li>?offset=10：指定返回记录的开始位置。</li>
+<li>?page=2&amp;size=100：指定第几页，以及每页的记录数。</li>
+<li>?sortby=name&amp;order=asc：指定返回结果按照哪个属性排序，以及排序顺序。</li>
+<li>?animal_type_id=1：指定筛选条件</li>
+</ul>
+</blockquote>
+</li>
+<li><p>状态码</p>
+<p>服务器向用户返回的状态码和提示信息，常用的有：</p>
+<blockquote>
+<ul>
+<li>200 OK - [GET]：服务器成功返回用户请求的数据，该操作是幂等的（Idempotent）。</li>
+<li>201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。</li>
+<li>202 Accepted - [*]：表示一个请求已经进入后台排队（异步任务）</li>
+<li>204 NO CONTENT - [DELETE]：用户删除数据成功。</li>
+<li>400 INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。</li>
+<li>401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）。</li>
+<li>403 Forbidden - [*] 表示用户得到授权（与401错误相对），但是访问是被禁止的。</li>
+<li>404 NOT FOUND - [*]：用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。</li>
+<li>406 Not Acceptable - [GET]：用户请求的格式不可得（比如用户请求JSON格式，但是只有XML格式）。</li>
+<li>410 Gone -[GET]：用户请求的资源被永久删除，且不会再得到的。</li>
+<li>422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。</li>
+<li>500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。</li>
+</ul>
+</blockquote>
+</li>
+<li><p>自定义错误处理</p>
+<p>服务器返回的错误信息，以键值对的形式返回</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    error:'Invalid API KEY'</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>返回结果</p>
+<p>针对不同操作，服务器向用户返回的结果应该符合以下规范。</p>
+<blockquote>
+<ul>
+<li>GET /collection：返回资源对象的列表（数组）</li>
+<li>GET /collection/resource：返回单个资源对象</li>
+<li>POST /collection：返回新生成的资源对象</li>
+<li>PUT /collection/resource：返回完整的资源对象</li>
+<li>PATCH /collection/resource：返回完整的资源对象</li>
+<li>DELETE /collection/resource：返回一个空文档</li>
+</ul>
+</blockquote>
+</li>
+<li><p>使用链接关联相关资源</p>
+<p>在返回结果中提供链接，连向其他API方法，使得用户不查文档，也知道下一步应该做什么。</p>
+<p>比如，当用户向api.example.com的根目录发出请求，会得到这样一个文档。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;<span class="attr">"link"</span>: &#123;</span><br><span class="line">  <span class="attr">"rel"</span>:   <span class="string">"collection https://www.example.com/employees"</span>,</span><br><span class="line">  <span class="attr">"href"</span>:  <span class="string">"https://api.example.com/employees"</span>,</span><br><span class="line">  <span class="attr">"title"</span>: <span class="string">"List of employees"</span>,</span><br><span class="line">  <span class="attr">"type"</span>:  <span class="string">"application/vnd.yourformat+json"</span></span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码表示，文档中有一个link属性，用户读取这个属性就知道下一步该调用什么API了。rel表示这个API与当前网址的关系（collection关系，并给出该collection的网址），href表示API的路径，title表示API的标题，type表示返回类型。</p>
+</li>
+<li><p>其他</p>
+<ul>
+<li><p>API的身份认证应该使用<a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html" target="_blank" rel="noopener">OAuth 2.0</a>框架。</p>
+</li>
+<li><p>服务器返回的数据格式，应该尽量使用JSON，避免使用XML。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="http://www.ruanyifeng.com/blog/2011/09/restful.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2011/09/restful.html</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2014/05/restful_api.html</a></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Guan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://guanhongjie.coding.me/posts/22ef0a2a/">http://guanhongjie.coding.me/posts/22ef0a2a/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://guanhongjie.coding.me">Guan</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/RESTful/">RESTful    </a></div><div class="post_share"><div class="social-share" data-image="http://139.9.220.20:81/images/blogimg/restful.gif" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-buttom"><i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="lozad post-qr-code__img" src="/img/wechatreward.jpg"><div class="post-qr-code__desc">微信</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="next-post pull-full"><a href="/posts/e8e2ee81/"><img class="next_cover lozad" data-src="http://139.9.220.20:81/images/blogimg/tree.PNG" onerror="onerror=null;src='/img/404.jpg'"><div class="label">下一篇</div><div class="next_info"><span>Mybatis查询树形结构数据</span></div></a></div></nav><hr><div id="post-comment"><div class="comment_headling"><i class="fa fa-comments fa-fw" aria-hidden="true"></i><span> 评论</span></div><div class="vcomment" id="vcomment"></div><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = false == true ? true : false;
+var verify = true == true ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'ol3kFl6JgskTuxhP1fWvVP5l-MdYXbMMI',
+  appKey:'PYECWvlXA1HTIoFDU3CKFQnn',
+  placeholder:'Please leave your footprints',
+  avatar:'monsterid',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang:'zh-cn',
+  recordIP: true
+});</script></div></div></div><footer><div id="footer"><div class="copyright">&copy;2019 By Guan</div><div class="framework-info"><span>驱动 </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly"><span>Butterfly</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="http://iguanhj.github.io/">blog</a>!</div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><section class="rightside" id="rightside"><a id="to_comment" href="#post-comment"><i class="scroll_to_comment fa fa-comments"></i></a><i class="fa fa-book" id="readmode" title="阅读模式"> </i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换">繁</a><i class="nightshift fa fa-moon-o" id="nightshift" title="夜间模式"></i></section><div class=" " id="post_bottom"><div id="post_bottom_items"><a id="mobile_to_comment" href="#post-comment"><i class="mobile_scroll_to_comment fa fa-comments"></i></a><i class="fa fa-list" id="mobile_toc"></i><div id="toc_mobile"><div class="toc_mobile_headline">目录</div><ol class="toc_mobile_items"><li class="toc_mobile_items-item toc_mobile_items-level-2"><a class="toc_mobile_items-link" href="#前言"><span class="toc_mobile_items-number">1.</span> <span class="toc_mobile_items-text">前言</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-2"><a class="toc_mobile_items-link" href="#什么是REST"><span class="toc_mobile_items-number">2.</span> <span class="toc_mobile_items-text">什么是REST</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-2"><a class="toc_mobile_items-link" href="#什么是RESTful"><span class="toc_mobile_items-number">3.</span> <span class="toc_mobile_items-text">什么是RESTful</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-2"><a class="toc_mobile_items-link" href="#为什么使用RESTful"><span class="toc_mobile_items-number">4.</span> <span class="toc_mobile_items-text">为什么使用RESTful</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-2"><a class="toc_mobile_items-link" href="#传统的URL和RESTful-风格"><span class="toc_mobile_items-number">5.</span> <span class="toc_mobile_items-text">传统的URL和RESTful 风格</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-2"><a class="toc_mobile_items-link" href="#如何实现RESTful风格的API"><span class="toc_mobile_items-number">6.</span> <span class="toc_mobile_items-text">如何实现RESTful风格的API</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-2"><a class="toc_mobile_items-link" href="#参考文档"><span class="toc_mobile_items-number">7.</span> <span class="toc_mobile_items-text">参考文档</span></a></li></ol></div></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script async src="/js/search/local-search.js"></script><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="/js/third-party/fireworks.js"></script><script src="/js/nightshift.js"></script><script color="0,0,255" opacity="0.7" zindex="-1" count="99" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN/js/canvas-nest.js"></script><script src="/js/tw_cn.js"></script><script>translateInitilization()
+
+</script><script src="https://cdn.jsdelivr.net/npm/instant.page@1.2.2/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script><script>const observer = lozad(); // lazy loads elements with default selector as '.lozad'
+observer.observe();</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
