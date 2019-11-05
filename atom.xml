@@ -6,15 +6,38 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://guanhongjie.coding.me/"/>
-  <updated>2019-11-05T07:24:00.209Z</updated>
+  <updated>2019-11-05T15:23:22.765Z</updated>
   <id>http://guanhongjie.coding.me/</id>
   
   <author>
-    <name>Guanhj</name>
+    <name>Guan</name>
     
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://guanhongjie.coding.me/posts/0/"/>
+    <id>http://guanhongjie.coding.me/posts/0/</id>
+    <published>2019-11-05T15:23:22.764Z</published>
+    <updated>2019-11-05T15:23:22.765Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>RESTful API的拦截机制</title>
