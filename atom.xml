@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Guanhj</title>
+  <title>Guan</title>
   <icon>http://guanhongjie.coding.me/icon.png</icon>
   <subtitle>管宏杰的个人博客</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://guanhongjie.coding.me/"/>
-  <updated>2019-11-05T15:23:22.765Z</updated>
+  <updated>2019-11-05T15:28:19.007Z</updated>
   <id>http://guanhongjie.coding.me/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://guanhongjie.coding.me/posts/0/"/>
     <id>http://guanhongjie.coding.me/posts/0/</id>
     <published>2019-11-05T15:23:22.764Z</published>
-    <updated>2019-11-05T15:23:22.765Z</updated>
+    <updated>2019-11-05T15:28:19.007Z</updated>
     
     <summary type="html">
     
