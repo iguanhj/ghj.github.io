@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Guan</title>
+  <title>Guanhj</title>
   <icon>http://guanhongjie.coding.me/icon.png</icon>
   <subtitle>管宏杰的个人博客</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://guanhongjie.coding.me/"/>
-  <updated>2019-10-28T12:44:55.636Z</updated>
+  <updated>2019-11-05T07:24:00.209Z</updated>
   <id>http://guanhongjie.coding.me/</id>
   
   <author>
-    <name>Guan</name>
+    <name>Guanhj</name>
     
   </author>
   
@@ -21,7 +21,7 @@
     <link href="http://guanhongjie.coding.me/posts/f2020793/"/>
     <id>http://guanhongjie.coding.me/posts/f2020793/</id>
     <published>2019-06-09T02:05:28.000Z</published>
-    <updated>2019-10-28T12:44:55.636Z</updated>
+    <updated>2019-11-05T07:24:00.209Z</updated>
     
     <summary type="html">
     
