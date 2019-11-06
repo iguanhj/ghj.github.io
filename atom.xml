@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://guanhongjie.coding.me/"/>
-  <updated>2019-11-05T15:28:19.007Z</updated>
+  <updated>2019-11-05T07:24:00.209Z</updated>
   <id>http://guanhongjie.coding.me/</id>
   
   <author>
@@ -15,29 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title></title>
-    <link href="http://guanhongjie.coding.me/posts/0/"/>
-    <id>http://guanhongjie.coding.me/posts/0/</id>
-    <published>2019-11-05T15:23:22.764Z</published>
-    <updated>2019-11-05T15:28:19.007Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;
-        
-      
-    
-    </summary>
-    
-    
-    
-  </entry>
   
   <entry>
     <title>RESTful API的拦截机制</title>
@@ -274,6 +251,35 @@
     
     
       <category term="Spring Boot" scheme="http://guanhongjie.coding.me/tags/Spring-Boot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>设计模式-单例模式</title>
+    <link href="http://guanhongjie.coding.me/posts/69e7b86f/"/>
+    <id>http://guanhongjie.coding.me/posts/69e7b86f/</id>
+    <published>2019-01-19T15:30:06.000Z</published>
+    <updated>2019-11-06T07:48:17.175Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="http://guanhongjie.coding.me/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="Java" scheme="http://guanhongjie.coding.me/tags/Java/"/>
+    
+      <category term="设计模式" scheme="http://guanhongjie.coding.me/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
   </entry>
   
